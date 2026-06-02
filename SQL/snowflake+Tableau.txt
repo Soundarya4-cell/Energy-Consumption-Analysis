@@ -1,0 +1,71 @@
+CREATE OR REPLACE STORAGE INTEGRATION tableau_Integration
+  TYPE = EXTERNAL_STAGE
+  STORAGE_PROVIDER = 'S3'
+  ENABLED = TRUE
+  STORAGE_AWS_ROLE_ARN = 'arn:aws:iam::952409747084:role/tableausf.role'
+  STORAGE_ALLOWED_LOCATIONS = ('s3://tableausf.project/')
+  COMMENT = 'Optional Comment';
+
+
+  --description Integration Object
+  DESC INTEGRATION tableau_Integration;
+
+
+CREATE database tableau;
+
+create schema tableau_Data;
+
+create table tableau_dataset (
+Household_ID	string, Region	string, Country	string, Energy_Source string,
+Monthly_Usage_kWh float, Year int, Household_Size int,Income_Level	string,
+Urban_Rural	string,Adoption_Year	int,Subsidy_Received	string,Cost_Savings_USD float
+);
+
+
+select * from tableau_dataset;
+
+create stage tableau.tableau_Data.tableau_stage
+url = 's3://tableausf.project'
+storage_integration = tableau_Integration;
+
+
+
+copy into tableau_dataset 
+from @tableau_stage
+file_format = (type=csv field_delimiter=',' skip_header=1 )
+on_error = 'continue';
+
+list @tableau_stage;
+
+CREATE TABLE energy_consumption AS SELECT * FROM TABLEAU_DATASET;
+
+select * from energy_consumption
+
+select income_level,count(*) from energy_consumption group by income_level
+
+//DATA TRANSFORMATIONS
+//For Low income level increase the monthly usage kwh by 10%
+//For Medium income level increase the monthly usage kwh by 20%
+//For High income level increase the monthly usage kwh by 30%
+
+update energy_consumption
+set monthly_usage_kwh = case
+    when income_level = 'Low' then monthly_usage_kwh * 1.1
+    when income_level = 'Middle' then monthly_usage_kwh * 1.2
+    when income_level = 'High' then monthly_usage_kwh * 1.3
+    else monthly_usage_kwh
+end;
+
+//For Low Income Level Reduce Cost savings USD by 10%
+//For Middle Income Level Reduce Cost savings USD by 20%
+//For High Income Level Reduce Cost savings USD by 30%
+
+update energy_consumption
+set cost_savings_usd = case
+    when income_level = 'Low' then cost_savings_usd * 0.9
+    when income_level = 'Middle' then cost_savings_usd * 0.8
+    when income_level = 'High' then cost_savings_usd * 0.7
+    else cost_savings_usd
+end;
+
+select * from energy_consumption
