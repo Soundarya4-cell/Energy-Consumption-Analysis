@@ -5,8 +5,16 @@ This project builds an automated data pipeline that moves raw renewable energy d
 
 ---
 
+## Tech Stack & Tools
+*   *Data Source:* CSV Dataset (Renewable_Energy_Usage)
+*   *Cloud Storage:* AWS S3
+*   *Data Warehousing:* Snowflake (SQL)
+*   *Business Intelligence:* Tableau Public
+
+---
+
 ## Technical Overview
-### 1. Cloud Storage & Secure Integration (AWS S3 ➔ Snowflake)
+### 1. Cloud Storage & Secure Integration (AWS S3 -> Snowflake)
 To ensure secure and credentialless access, data was uploaded to an AWS S3 bucket. A custom **AWS IAM Role and Trust Policy** were established to securely connect with Snowflake via a dedicated `STORAGE INTEGRATION` object, preventing the exposure of private cloud credentials in code.
 
 ### 2. Data Ingestion & Schema Design (Snowflake)
