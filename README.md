@@ -28,10 +28,11 @@ To prepare the dataset for deeper business analysis, conditional transformation 
 
 ## Repository Structure
 
-* `/sql`: Cleaned, production-ready Snowflake data definition (DDL) and manipulation (DML) scripts.
-* `/dataset`: Light sample rows demonstrating the raw CSV schema structure.
-* `/images`: Visual documentation and screenshots of the reporting application.
-* `/tableau`: Tableau Packaged Workbook (`.twbx`) containing interactive executive dashboard
+* `/Dataset`: Light sample rows demonstrating the raw CSV schema structure.
+* `/Images`: Visual documentation and screenshots of the reporting application.
+* `/SQL`: Cleaned, production-ready Snowflake data definition (DDL) and manipulation (DML) scripts.
+* `/Tableau`: Tableau Packaged Workbook (`.twbx`) containing interactive executive dashboard.
+* `/README.md`: Markdown page containing project details.
 
 ---
 
