@@ -21,6 +21,7 @@ To ensure secure and credentialless access, data was uploaded to an AWS S3 bucke
 A structured database schema was built to house the incoming technical, demographic, and financial metrics. Data was efficiently loaded into a staging table from the S3 external stage using the `COPY INTO` command.
 
 ### 3. Data Transformations (The Gold Layer)
+
 To prepare the dataset for deeper business analysis, conditional transformation logic was applied via SQL `UPDATE` and `CASE` statements to calculate custom impacts across household income levels:
 *   **Energy Consumption Adjustments:** Increased the raw monthly KWh usage figures by 10% for Low-Income,20% for Middle-Income and 30% for High Income Households.
 *   **Financial Impact Metrics:** Reduced the raw cost savings figures by 10% for Low-income, 20% for Middle-income, and 30% for High-income households.
@@ -41,7 +42,8 @@ To prepare the dataset for deeper business analysis, conditional transformation 
 Since this project connects directly to a live cloud data warehouse, interactive screenshots of the Dashboard is showcased below:
 
 ### Energy Consumption Dashboard
-
+A dashboard representing Energy usage and Cost Savings by Country,Region and Energy Source.
+ 
 ![Dashboard](Images/Dashboard.png)
 
 
